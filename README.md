@@ -1,36 +1,53 @@
 # Analysis_on_City_and_Resort_Hotel_Booking
 # IMPORTING THE PYTHON LIBRARIES
 import pandas as pd
+
 import matplotlib.pyplot as plt
+
 import seaborn as sns
+
 import warnings
+
 warnings.filterwarnings('ignore')
 # IMPORTING THE DATASET
 df=pd.read_csv('hotel_bookings 2.csv')
 # ANALYSING THE DATA
 df.head()
+
 df.tail()
+
 df.shape
+
 df.columns
+
 df.info()
+
 # DATA CLEANING
 df['reservation_status_date']= pd.to_datetime(df['reservation_status_date'])
 # GETTING INSIGHTS AND MAKING CHARTS
 df.describe(include=object)
+
 *for col in df.describe(include= 'object').columns:
     print(col)
     print(df[col].unique())
     print('..'*50)
+    
 *df.isnull().sum()
+
 *df.drop(['company','agent'], axis= 1, inplace= True )
+
 *df.dropna(inplace= True)
+
 *df.isnull().sum()
+
 *df['adr'].plot(kind= 'box')
+
 *cancelled_perc=df['is_canceled'].value_counts(normalize = True)
  cancelled_perc
  plt.figure(figsize=(5,4))
  plt.title('Reservation Status Count')
  plt.bar( ['Not canceled','Canceled'],df['is_canceled'].value_counts(), edgecolor= 'k', width= 0.7)
+ 
 *plt.figure(figsize= (8,4))
 ax1 = sns.countplot(x = 'hotel', hue ='is_canceled', data= df, palette ='Greens')
 legend_labels,_ =ax1. get_legend_handles_labels()
@@ -39,6 +56,7 @@ plt.title('Reservation status in different hotels', size = 20)
 plt.xlabel('hotel')
 plt.ylabel('number of reservations')
 plt.show()
+
 *resort_hotel= df[df['hotel']== 'Resort Hotel']
 resort_hotel['is_canceled'].value_counts(normalize= True)
 *city_hotel= df[df['hotel']== 'City Hotel']
@@ -51,6 +69,7 @@ plt.plot(resort_hotel.index, resort_hotel['adr'], label= 'Resort Hotel')
 plt.plot(city_hotel.index, city_hotel['adr'], label= 'City Hotel')
 plt.legend(fontsize='20')
 plt.show()
+
 *df['month']=df['reservation_status_date'].dt.month
 plt.figure(figsize=(16,8))
 ax1= sns.countplot(x = 'month', hue = 'is_canceled', data = df, palette= 'bright')
@@ -61,9 +80,11 @@ plt.xlabel('month')
 plt.ylabel('number of reservations')
 plt.legend(['not canceled', 'canceled'])
 plt.show()
+
 *plt.figure(figsize = (15,8))
 plt.title('ADR per month', fontsize =30)
 sns.barplot('month','adr', data = df[df['is_canceled']].groupby('month')[['adr']].sum())
+
 *cancelled_data = df[df['is_canceled'] == 1]
 top_10_country = cancelled_data['country'].value_counts()[:10]
 plt.figure(figsize = (8,8))
