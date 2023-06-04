@@ -59,10 +59,13 @@ plt.show()
 
 *resort_hotel= df[df['hotel']== 'Resort Hotel']
 resort_hotel['is_canceled'].value_counts(normalize= True)
+
 *city_hotel= df[df['hotel']== 'City Hotel']
 city_hotel['is_canceled'].value_counts(normalize= True)
+
 *resort_hotel= resort_hotel.groupby('reservation_status_date')[['adr']].mean()
 city_hotel =city_hotel.groupby('reservation_status_date')[['adr']].mean()
+
 *plt.figure(figsize = (20,8))
 plt.title('Average Daily Rate in City and Resort Hotel', fontsize=30)
 plt.plot(resort_hotel.index, resort_hotel['adr'], label= 'Resort Hotel')
@@ -91,14 +94,17 @@ plt.figure(figsize = (8,8))
 plt.title('Top 10 countries with reservation canceled')
 plt.pie(top_10_country,autopct = '%.2f', labels = top_10_country.index)
 plt.show()
+
 *df['market_segment'].value_counts()
+
 *df['market_segment'].value_counts(normalize= True)
+
 *cancelled_data['market_segment'].value_counts(normalize= True)
 cancelled_df_adr= cancelled_data.groupby('reservation_status_date')[['adr']].mean() 
 cancelled_df_adr.reset_index(inplace=True)
 cancelled_df_adr.sort_values('reservation_status_date', inplace=True)
 
-*not_cancelled_data=df[df['is_canceled'] == 0]
+not_cancelled_data=df[df['is_canceled'] == 0]
 not_cancelled_df_adr=not_cancelled_data.groupby('reservation_status_date')[['adr']].mean()
 not_cancelled_df_adr.reset_index(inplace=True)
 not_cancelled_df_adr.sort_values('reservation_status_date', inplace =True)
@@ -108,8 +114,10 @@ plt.title('Average Daily Rate')
 plt.plot(not_cancelled_df_adr['reservation_status_date'], not_cancelled_df_adr['adr'], label='not cancelled')
 plt.plot(cancelled_df_adr['reservation_status_date'], cancelled_df_adr['adr'], label = 'cancelled')
 plt.legend()
+
 *cancelled_df_adr= cancelled_df_adr[(cancelled_df_adr['reservation_status_date']> '2016') & (cancelled_df_adr['reservation_status_date']<'2017-09')]
 not_canelled_df_adr=not_cancelled_df_adr[(not_cancelled_df_adr['reservation_status_date']>'2016') & (not_cancelled_df_adr['reservation_status_date']< '2017-09')]
+
 *plt.figure(figsize = (20,6))
 plt.title('Average Daily Rate', fontsize=30)
 plt.plot(not_cancelled_df_adr['reservation_status_date'], not_cancelled_df_adr['adr'], label='not cancelled') 
